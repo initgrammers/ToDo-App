@@ -1,21 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import SafeAreaView from './src/components/SafeAreaView';
+import Navigator from './src/navigator';
+import {persistedStore} from './src/redux';
 
-export default function App() {
+const {store, persistor} = persistedStore();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaView>
+          <Navigator />
+        </SafeAreaView>
+      </PersistGate>
+    </Provider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
+
+// {/* <View style={styles.container}>
+//         <Text>Open up App.js to start working on your app!</Text>
+//         <StatusBar style="auto" />
+//         <Task onPress={() => {}} title="Hola mundo"  color="blue"/>
+//         <Task onPress={() => {}} title="Hola mundo"  color="blue"/>
+//         <Task onPress={() => {}} title="Hola mundo"  color="blue"/>
+//         <Task onPress={() => {}} title="Hola mundo"  color="blue"/>
+//         <Task onPress={() => {}} title="Hola mundo"  color="blue"/>
+//       </View> */}
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//   },
+// });
