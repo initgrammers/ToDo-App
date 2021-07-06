@@ -1,77 +1,34 @@
 import React from 'react';
-import View from '../../components/View';
-import TextInput from '../../components/TextInput';
-import DateTimePicker from '../../components/DateTimePicker';
-import Select from '../../components/Select';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import FormTask from '../../views/FormTask';
+import actions from '../../redux/actions';
+import generateUuid from '../../utils/uuid';
+import {getRandomColor} from '../../utils/constants';
 
-const AddTask = () => (
-  <View background="white" style={{flex: 1}}>
-    <TextInput
-      field="Title"
-      placeholder="My task title"
-      onChangeText={text => {}}
-    />
-    <DateTimePicker
-      field="Deadline"
-      format="yyyy-MM-dd"
-      mode="date"
-      onChange={() => {}}
-    />
+const AddTask = ({addNewTask, navigation}) => {
+  const handleSubmit = task => {
+    addNewTask({
+      ...task,
+      createAt: new Date().valueOf(),
+      id: generateUuid(),
+      color: getRandomColor(),
+    });
+    navigation.goBack();
+  };
 
-    <View flexDirection="row">
-      <DateTimePicker
-        field="Start time"
-        format="p"
-        mode="time"
-        onChange={() => {}}
-        style={{flex: 1}}
-      />
-      <DateTimePicker
-        field="End time"
-        format="p"
-        mode="time"
-        onChange={a => alert(a)}
-        style={{flex: 1}}
-      />
-    </View>
+  return <FormTask onSubmit={handleSubmit} />;
+};
 
-    <Select
-      field="Remind"
-      items={[
-        {
-          Name: '10 minutes early',
-          Id: 1,
-        },
-        {
-          Name: '30 minutes early',
-          Id: 2,
-        },
-        {
-          Name: '1 hour early',
-          Id: 3,
-        },
-        {
-          Name: '1 day early',
-          Id: 4,
-        },
-      ]}
-      onChange={() => {}}
-    />
-    <Select
-      field="Repeat"
-      items={[
-        {
-          Name: 'Daily',
-          Id: 1,
-        },
-        {
-          Name: 'Weekly',
-          Id: 1,
-        },
-      ]}
-      onChange={() => {}}
-    />
-  </View>
-);
+AddTask.propTypes = {
+  addNewTask: PropTypes.func.isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
-export default AddTask;
+const mapDispatchToProps = {
+  addNewTask: actions.addNewTask,
+};
+
+export default connect(null, mapDispatchToProps)(AddTask);

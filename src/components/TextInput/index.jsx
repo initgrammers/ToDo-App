@@ -10,7 +10,7 @@ const StyledTextInput = styled.TextInput`
   border-radius: 4px;
 `;
 
-const CustomTextInput = ({field, icon, ...rest}) => (
+const CustomTextInput = ({field, icon, error, ...rest}) => (
   <View marginRight={12} marginLeft={12} marginTop={12}>
     <Text fontWeight="bold">{field}</Text>
     <View
@@ -22,17 +22,20 @@ const CustomTextInput = ({field, icon, ...rest}) => (
       <StyledTextInput {...rest} />
       {icon && icon}
     </View>
+    <Text color="red">{error}</Text>
   </View>
 );
 
 CustomTextInput.propTypes = {
   field: PropTypes.string,
   icon: PropTypes.element,
+  error: PropTypes.string,
 };
 
 CustomTextInput.defaultProps = {
   field: '',
   icon: undefined,
+  error: '',
 };
 
 export default CustomTextInput;

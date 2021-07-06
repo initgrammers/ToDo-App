@@ -12,7 +12,7 @@ const StyledButton = styled.TouchableOpacity`
   flex: 1;
 `;
 
-const Select = ({field, value, format, onChange, items}) => {
+const Select = ({field, value, error, format, onChange, items, ...rest}) => {
   return (
     <View flexDirection="row">
       <PickerModal
@@ -23,11 +23,21 @@ const Select = ({field, value, format, onChange, items}) => {
               editable={false}
               icon={<Entypo name="chevron-down" size={24} color="#d3d3d3" />}
               value={value[format]}
+              style={value && {color: 'black'}}
+              error={error}
+              {...rest}
             />
           </StyledButton>
         )}
         items={items}
-        onSelected={onChange}
+        onSelected={value =>
+          onChange({
+            target: {
+              type: 'select',
+              value,
+            },
+          })
+        }
       />
     </View>
   );
@@ -39,12 +49,14 @@ Select.propTypes = {
   format: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  error: PropTypes.string,
 };
 
 Select.defaultProps = {
   field: '',
   value: {},
   format: 'Name',
+  error: '',
 };
 
 export default Select;

@@ -17,6 +17,12 @@ const markAsUncompleted = id => ({
 const toggleStateTask = (id, currenState) =>
   currenState ? markAsUncompleted(id) : markAsCompleted(id);
 
+const addNewTask = data => ({
+  type: taskTypes.ADD_TASK,
+  payload: data,
+});
+
 export default {
   toggleStateTask,
+  addNewTask,
 };

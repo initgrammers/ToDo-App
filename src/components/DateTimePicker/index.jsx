@@ -19,6 +19,7 @@ const CustomDateTimePicker = ({
   onChange,
   style,
   mode,
+  error,
 }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -30,8 +31,13 @@ const CustomDateTimePicker = ({
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = _date => {
-    onChange(_date);
+  const handleConfirm = date => {
+    onChange({
+      target: {
+        type: 'date',
+        value: date,
+      },
+    });
     hideDatePicker();
   };
 
@@ -42,7 +48,10 @@ const CustomDateTimePicker = ({
           field={field}
           editable={false}
           icon={<AntDesign name="clockcircleo" size={24} color="#d3d3d3" />}
-          value={lbDate.format(value, format)}
+          placeholder={lbDate.format(new Date(), format)}
+          value={value && lbDate.format(value, format)}
+          style={value && {color: 'black'}}
+          error={error}
         />
       </StyledButton>
       <DateTimePickerModal
@@ -50,6 +59,7 @@ const CustomDateTimePicker = ({
         mode={mode}
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
+        date={value}
       />
     </View>
   );
@@ -61,13 +71,15 @@ CustomDateTimePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.instanceOf(Date),
   mode: PropTypes.oneOf(['date', 'time', 'datetime']),
+  error: PropTypes.string,
 };
 
 CustomDateTimePicker.defaultProps = {
-  value: new Date(),
+  value: undefined,
   field: '',
   format: 'dd/MM/yyyy p',
   mode: 'datetime',
+  error: '',
 };
 
 export default CustomDateTimePicker;

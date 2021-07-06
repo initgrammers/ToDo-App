@@ -21,4 +21,32 @@ const colors = [
 export const getRandomColor = () =>
   colors[Math.floor(Math.random() * colors.length)];
 
+export const reminderOptions = [
+  {
+    Name: '10 minutes early',
+    Id: 1,
+  },
+  {
+    Name: '30 minutes early',
+    Id: 2,
+  },
+  {
+    Name: '1 hour early',
+    Id: 3,
+  },
+  {
+    Name: '1 day early',
+    Id: 4,
+  },
+];
 
+export const repeatOptions = [
+  {
+    Name: 'Daily',
+    Id: 1,
+  },
+  {
+    Name: 'Weekly',
+    Id: 1,
+  },
+];
