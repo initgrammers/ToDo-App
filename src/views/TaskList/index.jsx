@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import View from '../../components/View';
 import TaskList from '../../components/TaskList';
-import Button from '../../components/Button';
 import {propTypeTask} from '../../propTypes';
-import styles from './styles';
+import {Container, Button} from './Styled';
 
 const TaskListView = ({tasks, toggleStateTask, addTask}) => (
-  <View style={styles.container}>
+  <Container>
     <TaskList tasks={tasks} onPress={task => toggleStateTask(task)} />
-    <Button onPress={addTask} style={styles.button} title="Add a task" />
-  </View>
+    <Button onPress={addTask} title="Add a task" />
+  </Container>
 );
 
 TaskListView.propTypes = {

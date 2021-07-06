@@ -1,14 +1,11 @@
 import React from 'react';
 import {Formik} from 'formik';
-import {ScrollView} from 'react-native';
 import View from '../../components/View';
 import TextInput from '../../components/TextInput';
-import DateTimePicker from '../../components/DateTimePicker';
 import Select from '../../components/Select';
-import Button from '../../components/Button';
 import {reminderOptions, repeatOptions} from '../../utils/constants';
-import styles from './styles';
 import * as Validation from '../../utils/validation';
+import {Content, ScrollView, Button, DateTimePicker} from './Styled';
 
 const fromSchema = Validation.object().shape({
   title: Validation.string().required('Required'),
@@ -22,8 +19,8 @@ const fromSchema = Validation.object().shape({
 const FormTask = ({onSubmit}) => (
   <Formik initialValues={{}} onSubmit={onSubmit} validationSchema={fromSchema}>
     {({handleChange, errors, handleSubmit, values}) => (
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.container} padding={8}>
+      <ScrollView>
+        <Content>
           <TextInput
             field="Title"
             placeholder="My task title"
@@ -31,21 +28,22 @@ const FormTask = ({onSubmit}) => (
             value={values.title}
             error={errors.title}
           />
-          <DateTimePicker
-            field="Deadline"
-            format="yyyy-MM-dd"
-            mode="date"
-            onChange={handleChange('deadline')}
-            value={values.deadline}
-            error={errors.deadline}
-          />
+          <View flexDirection="row">
+            <DateTimePicker
+              field="Deadline"
+              format="yyyy-MM-dd"
+              mode="date"
+              onChange={handleChange('deadline')}
+              value={values.deadline}
+              error={errors.deadline}
+            />
+          </View>
           <View flexDirection="row">
             <DateTimePicker
               field="Start time"
               format="p"
               mode="time"
               onChange={handleChange('startTime')}
-              style={styles.flex1}
               value={values.startTime}
               error={errors.startTime}
             />
@@ -54,7 +52,6 @@ const FormTask = ({onSubmit}) => (
               format="p"
               mode="time"
               onChange={handleChange('endTime')}
-              style={styles.flex1}
               value={values.endTime}
               error={errors.endTime}
             />
@@ -75,12 +72,8 @@ const FormTask = ({onSubmit}) => (
             error={errors.repeat}
             placeholder="Weekly"
           />
-          <Button
-            onPress={handleSubmit}
-            style={styles.button}
-            title="Add a task"
-          />
-        </View>
+          <Button onPress={handleSubmit} title="Add a task" />
+        </Content>
       </ScrollView>
     )}
   </Formik>
