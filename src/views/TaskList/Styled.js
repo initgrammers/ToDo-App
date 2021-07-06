@@ -9,5 +9,5 @@ export const Container = styled(View)`
 
 export const Button = styled(ButtonBase)`
   position: absolute;
-  bottom: 24;
+  bottom: 24px;
 `;
